@@ -1,0 +1,15 @@
+spring:
+  application.name: storage
+  jmx.enabled: false
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017
+      database: storage
+  jackson:
+    default-property-inclusion: non_empty
+    deserialization:
+      fail-on-unknown-properties: false
+
+server.port: 10001
+
+management.endpoints.web.exposure.include: '*'

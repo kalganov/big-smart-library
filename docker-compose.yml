@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  mongo:
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    networks:
+      - mongo-network
+    image: mongo:latest
+    restart: always
+  mongo-express:
+    container_name: mongo-client
+    image: mongo-express:latest
+    restart: always
+    networks:
+      - mongo-network
+    ports:
+      - 8081:8081
+  storage-image:
+    depends_on:
+      - mongo
+    build: ./repository-service/build/docker
+    container_name: storage
+    image: storage-image:latest
+    links:
+      - mongo
+    networks:
+      - mongo-network
+    restart: always
+    ports:
+      - 10001:10001
+
+networks:
+  mongo-network:

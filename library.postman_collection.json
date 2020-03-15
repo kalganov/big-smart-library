@@ -1,0 +1,163 @@
+{
+  "info": {
+    "_postman_id": "7740b5a5-a0bb-42cc-9a29-7b75ad9d953c",
+    "name": "library",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "findAll",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:10001/api/books?page=0&size=10",
+          "host": [
+            "localhost"
+          ],
+          "port": "10001",
+          "path": [
+            "api",
+            "books"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "save",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"customerId\": \"customerId\",\n    \"genre\": \"fantasy\",\n    \"title\": \"A Game of Thrones\",\n    \"language\": \"eng\",\n    \"authors\": [\n        {\n            \"firstName\": \"George\",\n            \"lastName\": \"R. R. Martin\"\n     \n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:10001/api/books/save",
+          "host": [
+            "localhost"
+          ],
+          "port": "10001",
+          "path": [
+            "api",
+            "books",
+            "save"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"id\": \"6943d56e-838d-4df0-9855-43a67500b24e\",\n    \"customerId\": \"customerId\",\n    \"genre\": \"fantasy\",\n    \"title\": \"A Game of Thrones\",\n    \"language\": \"eng\",\n    \"authors\": [\n        {\n        \t\"id\": \"67639b84-eec1-4b37-954a-70638a3ac1d7\",\n            \"firstName\": \"George123\",\n            \"lastName\": \"R. R. Martin\"\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:10001/api/books/update",
+          "host": [
+            "localhost"
+          ],
+          "port": "10001",
+          "path": [
+            "api",
+            "books",
+            "update"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "findOne",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:10001/api/books/b471dc55-50eb-40cb-b1ae-91ad9aef8d39?",
+          "host": [
+            "localhost"
+          ],
+          "port": "10001",
+          "path": [
+            "api",
+            "books",
+            "b471dc55-50eb-40cb-b1ae-91ad9aef8d39"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0",
+              "disabled": true
+            },
+            {
+              "key": "size",
+              "value": "10",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "localhost:10001/api/books/b471dc55-50eb-40cb-b1ae-91ad9aef8d39",
+          "host": [
+            "localhost"
+          ],
+          "port": "10001",
+          "path": [
+            "api",
+            "books",
+            "b471dc55-50eb-40cb-b1ae-91ad9aef8d39"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
