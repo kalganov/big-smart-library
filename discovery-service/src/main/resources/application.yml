@@ -1,0 +1,13 @@
+spring:
+  application.name: discovery
+  jmx.default-domain: discovery
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    enableSelfPreservation: false

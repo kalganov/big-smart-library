@@ -1,20 +1,16 @@
 dependencies {
     implementation(
-            'org.springframework.boot:spring-boot-starter-data-mongodb'
-    )
-
-    testImplementation(
-            'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+            'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
     )
 }
 
 application {
-    mainClassName = 'leti.project.storage.StorageApplicationKt'
+    mainClassName = 'leti.project.discovery.DiscoveryApplicationKt'
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'leti.project.storage.StorageApplicationKt'
+        attributes 'Main-Class': 'leti.project.discovery.DiscoveryApplicationKt'
     }
 
     from {
@@ -26,7 +22,7 @@ import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 
 def dockerBuildDir = 'build/docker/'
 def exposedPort = '10001'
-def jarName = 'repository-service'
+def jarName = 'discovery-service'
 
 task createDockerfile(type: Dockerfile) {
     from 'openjdk:8-jre-alpine'

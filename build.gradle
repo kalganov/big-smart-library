@@ -55,6 +55,10 @@ subprojects {
                 'com.fasterxml.jackson.module:jackson-module-kotlin'
         )
 
+        if (project.name != "discovery-service") {
+            implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+        }
+
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
@@ -71,3 +75,8 @@ subprojects {
         kotlinOptions.jvmTarget = '1.8'
     }
 }
+
+task prepareDockerAll {
+    dependsOn ':repository-service:prepareDocker',':discovery-service:prepareDocker'
+}
+

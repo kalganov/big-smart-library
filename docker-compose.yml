@@ -1,5 +1,14 @@
 version: '3.7'
 services:
+  eureka:
+    build: ./discovery-service/build/docker
+    container_name: discovery
+    image: discovery-image:latest
+    networks:
+      - eureka-network
+    restart: always
+    ports:
+      - 8761:8761
   mongo:
     container_name: mongodb
     ports:
@@ -18,17 +27,21 @@ services:
       - 8081:8081
   storage-image:
     depends_on:
+      - eureka
       - mongo
     build: ./repository-service/build/docker
     container_name: storage
     image: storage-image:latest
     links:
       - mongo
+      - eureka
     networks:
       - mongo-network
+      - eureka-network
     restart: always
     ports:
       - 10001:10001
 
 networks:
   mongo-network:
+  eureka-network:
