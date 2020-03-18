@@ -63,7 +63,10 @@ class BookController(
         authors.stream()
             .filter { (id) -> id == null }
             .forEach { author ->
-                author.id = randomUUID().toString()
+                val authorFromDB =
+                    authorRepository.findByFirstNameAndLastName(author.firstName, author.lastName).stream()
+                        .findAny()
+                author.id = if (authorFromDB.isPresent) authorFromDB.get().id else randomUUID().toString()
             }
         authorRepository.saveAll(authors)
     }

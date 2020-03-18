@@ -9,8 +9,8 @@ import java.io.Serializable
 @Document(collection = "author")
 data class Author(
     @Id var id: String?,
-    @Field("first_name") val firstName: String,
-    @Field("last_name") val lastName: String
+    @Field("firstName") val firstName: String,
+    @Field("lastName") val lastName: String
 ) : Serializable {
 
     companion object {
