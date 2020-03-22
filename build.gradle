@@ -56,7 +56,10 @@ subprojects {
         )
 
         if (project.name != "discovery-service") {
-            implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+            implementation(
+                    'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
+                    'org.springframework.kafka:spring-kafka'
+            )
         }
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {

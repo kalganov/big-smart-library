@@ -1,5 +1,6 @@
 package leti.project.storage.controller
 
+import leti.project.storage.kafka.MessageProducer
 import leti.project.storage.model.Author
 import leti.project.storage.model.Book
 import leti.project.storage.repository.AuthorRepository
@@ -20,6 +21,7 @@ import java.util.UUID.randomUUID
 class BookController(
     private val bookRepository: BookRepository,
     private val authorRepository: AuthorRepository,
+    private val messageProducer: MessageProducer,
     private val log: Logger = LoggerFactory.getLogger(BookController::class.java)
 ) {
 
@@ -28,7 +30,9 @@ class BookController(
         log.debug("Request to save Book : $book")
         book.id = randomUUID().toString()
         savePassedAuthors(book.authors)
-        return bookRepository.save(book)
+        val savedBook = bookRepository.save(book)
+        messageProducer.sendMessage(savedBook)
+        return savedBook
     }
 
     @PostMapping(path = ["/update"], consumes = [APPLICATION_JSON_VALUE])
