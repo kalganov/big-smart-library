@@ -77,6 +77,8 @@ subprojects {
 }
 
 task prepareDockerAll {
-    dependsOn ':repository-service:prepareDocker',':discovery-service:prepareDocker'
+    dependsOn ':repository-service:prepareDocker',
+            ':discovery-service:prepareDocker',
+            ':search-service:prepareDocker'
 }
 

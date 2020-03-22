@@ -1,0 +1,43 @@
+dependencies {
+    implementation(
+            'org.elasticsearch.client:elasticsearch-rest-high-level-client'
+    )
+}
+
+application {
+    mainClassName = 'leti.project.search.SearchApplicationKt'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'leti.project.search.SearchApplicationKt'
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
+def dockerBuildDir = 'build/docker/'
+def exposedPort = '10001'
+def jarName = 'search-service'
+
+task createDockerfile(type: Dockerfile) {
+    from 'openjdk:8-jre-alpine'
+    copyFile jar.archiveName, "/app/$jarName" + '.jar'
+    exposePort exposedPort as int
+    entryPoint 'java', '-jar', "/app/$jarName" + '.jar'
+    runCommand 'apk --update --no-cache add curl'
+}
+
+task syncJar(type: Copy) {
+    dependsOn assemble
+    from jar.archivePath
+    into dockerBuildDir
+}
+
+task prepareDocker {
+    dependsOn createDockerfile, syncJar
+}

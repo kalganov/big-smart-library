@@ -2,4 +2,4 @@ rootProject.name = 'big-smart-library'
 
 include 'repository-service'
 include 'discovery-service'
-
+include 'search-service'

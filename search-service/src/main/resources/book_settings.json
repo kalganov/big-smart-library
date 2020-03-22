@@ -1,0 +1,21 @@
+{
+  "analysis": {
+    "analyzer": {
+      "shingle": {
+        "type": "custom",
+        "tokenizer": "whitespace",
+        "filter": [
+          "lowercase",
+          "shingle_filter"
+        ]
+      }
+    },
+    "filter": {
+      "shingle_filter": {
+        "type": "shingle",
+        "min_shingle_size": 2,
+        "max_shingle_size": 3
+      }
+    }
+  }
+}
