@@ -5,9 +5,7 @@ import leti.project.search.dto.SearchResult
 import leti.project.search.service.BookService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api/search")
@@ -17,8 +15,16 @@ class BookController(
 ) {
 
     @GetMapping("/all")
+    @ResponseBody
     fun findAll(): SearchResult<BookElastic> {
         log.debug("Request to search all Books")
         return bookService.findAll()
+    }
+
+    @GetMapping("/byTitle")
+    @ResponseBody
+    fun findByTitle(@RequestParam title: String): SearchResult<BookElastic> {
+        log.debug("Request to search a book with title: ")
+        return bookService.findByTitle(title)
     }
 }

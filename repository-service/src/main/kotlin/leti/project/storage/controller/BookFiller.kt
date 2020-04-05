@@ -25,7 +25,7 @@ class BookFiller(
         bufferReader.use {
             while (it.ready()) {
                 val jsonBook = it.readLine()
-                log.debug(jsonBook)
+                log.info(jsonBook)
                 bookController.save(objectMapper.readValue(jsonBook))
             }
         }
