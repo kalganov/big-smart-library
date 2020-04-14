@@ -11,6 +11,7 @@ spring:
       fail-on-unknown-properties: false
   kafka:
     bootstrap-servers: kafka:9092
+    topic: storage.entity
 
 server.port: 10001
 

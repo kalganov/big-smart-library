@@ -62,14 +62,16 @@ subprojects {
             )
         }
 
-        testImplementation('org.springframework.boot:spring-boot-starter-test') {
-            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-        }
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation(
+                'org.springframework.kafka:spring-kafka-test',
+                'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+        )
     }
 
-    test {
-        useJUnitPlatform()
-    }
+//    test {
+//        useJUnitPlatform()
+//    }
 
     compileKotlin {
         kotlinOptions.jvmTarget = '1.8'

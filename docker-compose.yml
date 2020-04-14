@@ -120,9 +120,9 @@ services:
 
 
 networks:
+  kafka-network:
   mongo-network:
   eureka-network:
   es-network:
-  kafka-network:
 volumes:
   es: {}

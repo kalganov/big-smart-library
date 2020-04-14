@@ -1,0 +1,14 @@
+spring:
+  application.name: storage
+  jmx.enabled: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: storage
+  jackson:
+    default-property-inclusion: non_empty
+    deserialization:
+      fail-on-unknown-properties: false
+  kafka:
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    topic: storage.entity

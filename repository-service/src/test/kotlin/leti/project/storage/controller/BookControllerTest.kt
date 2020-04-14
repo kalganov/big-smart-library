@@ -1,29 +1,17 @@
-package leti.project.storage
+package leti.project.storage.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import leti.project.storage.IntegrationTest
 import leti.project.storage.model.Author
 import leti.project.storage.model.Book
-import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
+import org.junit.Test
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class BookControllerTest {
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
-
-    @Autowired
-    private lateinit var objectMapper: ObjectMapper
+class BookControllerTest : IntegrationTest() {
 
     @Test
     @Throws(Exception::class)
@@ -48,7 +36,6 @@ class BookControllerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun testSaveAndDelete() {
         var book = createBook()
         mockMvc.perform(
@@ -69,7 +56,6 @@ class BookControllerTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun testSaveAndUpdate() {
         var book = createBook()
         mockMvc.perform(
@@ -87,11 +73,31 @@ class BookControllerTest {
         val updatedBook = Book(book.id, "newCustomerId", book.genre, book.title, book.language, book.authors)
 
         mockMvc.perform(
-            post("/api/books/save")
+            post("/api/books/update")
                 .content(asJsonString(updatedBook))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
+            .andDo(print())
+            .andExpect(status().isOk)
+    }
+
+    @Test
+    fun testSaveAndFindOne() {
+        var book = createBook()
+        mockMvc.perform(
+            post("/api/books/save")
+                .content(asJsonString(book))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andDo { result ->
+                book = objectMapper.readValue(result.response.contentAsString)
+            }
+
+        mockMvc.perform(get("/api/books/${book.id}"))
             .andDo(print())
             .andExpect(status().isOk)
     }
