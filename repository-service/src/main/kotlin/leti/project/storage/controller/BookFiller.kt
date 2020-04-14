@@ -21,12 +21,15 @@ class BookFiller(
 
     @PostConstruct
     fun initBooks() {
-        val bufferReader = BufferedReader(InputStreamReader(booksFile.inputStream))
-        bufferReader.use {
-            while (it.ready()) {
-                val jsonBook = it.readLine()
-                log.info(jsonBook)
-                bookController.save(objectMapper.readValue(jsonBook))
+        val findAll = bookController.findAll(0, 1)
+        if (findAll.isEmpty) {
+            val bufferReader = BufferedReader(InputStreamReader(booksFile.inputStream))
+            bufferReader.use {
+                while (it.ready()) {
+                    val jsonBook = it.readLine()
+                    log.info(jsonBook)
+                    bookController.save(objectMapper.readValue(jsonBook))
+                }
             }
         }
     }

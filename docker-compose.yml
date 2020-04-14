@@ -32,7 +32,7 @@ services:
       BROKER_ID_COMMAND: "echo 1"
       KAFKA_MESSAGE_MAX_BYTES: 1000000
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://kafka:9093
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://localhost:9093
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
@@ -101,6 +101,7 @@ services:
     depends_on:
       - es
       - eureka
+      - kafka
       - storage
     build: ./search-service/build/docker
     container_name: search
@@ -108,9 +109,11 @@ services:
     links:
       - es
       - eureka
+      - kafka
     networks:
       - es-network
       - eureka-network
+      - kafka-network
     restart: always
     ports:
       - 10002:10002

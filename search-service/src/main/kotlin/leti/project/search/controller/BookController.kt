@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api/search")
+@CrossOrigin(origins = ["*"])
 class BookController(
     private val log: Logger = LoggerFactory.getLogger(BookController::class.java),
     private val bookService: BookService

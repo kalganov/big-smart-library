@@ -1,15 +1,22 @@
 spring:
-  application.name: search
+  application.name: storage
   jmx.enabled: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: storage
+  jackson:
+    default-property-inclusion: non_empty
+    deserialization:
+      fail-on-unknown-properties: false
   kafka:
     bootstrap-servers: localhost:9093
-server.port: 10002
 
-elasticHost: localhost
+server.port: 10001
 
 eureka:
   instance:
-    hostname: search
+    hostname: storage
     preferIpAddress: true
   client:
     registerWithEureka: true

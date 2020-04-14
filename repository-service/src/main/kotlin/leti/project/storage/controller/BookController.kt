@@ -39,7 +39,9 @@ class BookController(
     fun update(@RequestBody @Validated book: Book): Book {
         log.debug("Request to update Book : $book")
         if (book.id != null) {
-            return bookRepository.save(book)
+            val updatedBook = bookRepository.save(book)
+            kafkaProducer.sendBook(updatedBook)
+            return updatedBook
         } else {
             throw IllegalArgumentException("Field id is required")
         }
