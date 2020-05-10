@@ -58,6 +58,8 @@ subprojects {
         if (project.name != "discovery-service") {
             implementation(
                     'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client',
+                    'org.springframework.cloud:spring-cloud-starter-openfeign',
+                    'io.github.openfeign:feign-jackson',
                     'org.springframework.kafka:spring-kafka'
             )
         }
@@ -68,10 +70,6 @@ subprojects {
                 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
         )
     }
-
-//    test {
-//        useJUnitPlatform()
-//    }
 
     compileKotlin {
         kotlinOptions.jvmTarget = '1.8'

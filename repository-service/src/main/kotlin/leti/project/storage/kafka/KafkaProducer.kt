@@ -18,4 +18,8 @@ class KafkaProducer(
         val key = book.javaClass.simpleName + "|" + book.id
         kafkaTemplate.send(topic, key, body)
     }
+
+    fun sendBookForDelete(id: String) {
+        kafkaTemplate.send(topic, "delete", id)
+    }
 }

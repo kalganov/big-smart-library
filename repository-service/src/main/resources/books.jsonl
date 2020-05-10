@@ -6,3 +6,8 @@
 {"customerId": "1","genre": "fantasy","title": "Harry Potter: The Order of the Phoenix","language": "eng","authors": [{"firstName": "Joanne","lastName": "Rowling"}]}
 {"customerId": "1","genre": "fantasy","title": "Harry Potter: The Half-Blood Prince","language": "eng","authors": [{"firstName": "Joanne","lastName": "Rowling"}]}
 {"customerId": "1","genre": "fantasy","title": "Harry Potter: The Deathly Hallows","language": "eng","authors": [{"firstName": "Joanne","lastName": "Rowling"}]}
+{"customerId": "1","genre": "poem","title": "Ruslan and Ludmila","language": "rus","authors": [{"firstName": "Alexander","lastName": "Pushkin"}]}
+{"customerId": "1","genre": "novel","title": "War and Peace","language": "rus","authors": [{"firstName": "Leo","lastName": "Tolstoy"}]}
+{"customerId": "1","genre": "novel","title": "Childhood","language": "rus","authors": [{"firstName": "Leo","lastName": "Tolstoy"}]}
+{"customerId": "1","genre": "novel","title": "Boyhood","language": "rus","authors": [{"firstName": "Leo","lastName": "Tolstoy"}]}
+{"customerId": "1","genre": "novel","title": "Youth","language": "rus","authors": [{"firstName": "Leo","lastName": "Tolstoy"}]}

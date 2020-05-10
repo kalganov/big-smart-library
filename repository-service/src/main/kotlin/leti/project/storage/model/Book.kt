@@ -11,7 +11,7 @@ data class Book(
     @Field("genre") val genre: String,
     @Field("title") val title: String,
     @Field("language") val language: String,
-    @DBRef @Field("authors") val authors: HashSet<Author>
+    @DBRef @Field("authors") var authors: Collection<Author>
 ) : Serializable {
 
     companion object {

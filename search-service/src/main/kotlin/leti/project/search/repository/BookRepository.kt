@@ -5,6 +5,7 @@ import leti.project.search.dto.BookElastic
 import leti.project.search.dto.SearchResult
 import leti.project.search.model.Book
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest
+import org.elasticsearch.action.delete.DeleteRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.action.search.SearchRequest
 import org.elasticsearch.action.search.SearchResponse
@@ -13,6 +14,7 @@ import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.client.indices.GetIndexRequest
 import org.elasticsearch.cluster.health.ClusterHealthStatus
+import org.elasticsearch.common.unit.Fuzziness
 import org.elasticsearch.common.xcontent.XContentType
 import org.elasticsearch.index.query.QueryBuilder
 import org.elasticsearch.index.query.QueryBuilders
@@ -38,6 +40,12 @@ class BookRepository(
     private val objectMapper: ObjectMapper,
     private val log: Logger = LoggerFactory.getLogger(BookRepository::class.java)
 ) {
+
+    companion object {
+        const val TITLE_FIELD = "title"
+        const val AUTHORS_FIELD = "authors"
+        const val GENRE_FIELD = "genre"
+    }
 
     @PostConstruct
     fun init() {
@@ -86,12 +94,21 @@ class BookRepository(
         return obj
     }
 
+    fun removeBook(id: String) {
+        client.delete(DeleteRequest(getIndexName(), "_doc", id), RequestOptions.DEFAULT)
+    }
+
     fun findAll(): SearchResult<BookElastic> {
         return applySearch(QueryBuilders.matchAllQuery())
     }
 
-    fun findByTitle(title: String): SearchResult<BookElastic> {
-        return applySearch(boolQuery().should(matchQuery("title", title)))
+    fun find(value: String): SearchResult<BookElastic> {
+        return applySearch(
+            boolQuery()
+                .should(matchQuery(TITLE_FIELD, value).fuzziness(Fuzziness.TWO).boost(1.2F))
+                .should(matchQuery(AUTHORS_FIELD, value).fuzziness(Fuzziness.TWO).boost(1.5F))
+                .should(matchQuery(GENRE_FIELD, value).fuzziness(Fuzziness.TWO))
+        )
     }
 
     private fun applySearch(query: QueryBuilder?): SearchResult<BookElastic> {

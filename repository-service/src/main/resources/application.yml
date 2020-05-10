@@ -13,6 +13,8 @@ spring:
     bootstrap-servers: kafka:9092
     topic: storage.entity
 
+searchHost: search
+
 server.port: 10001
 
 eureka:

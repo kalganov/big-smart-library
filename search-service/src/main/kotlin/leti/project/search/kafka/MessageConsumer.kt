@@ -31,9 +31,15 @@ class MessageConsumer(
             log.info("Indexing book: $book")
             bookService.saveOrUpdate(book)
         }
+        if (isRequestForDelete(key)) {
+            val id = record.value()
+            log.info("Delete book by id: $id")
+            bookService.removeBook(id.toString())
+        }
     }
 
     private fun isBookRecord(key: String): Boolean = key.split("|").toTypedArray()[0] == "Book"
+    private fun isRequestForDelete(key: String): Boolean = key.contains("delete")
 
     private fun convertToBook(json: String?): Book = objectMapper.readValue(json, Book::class.java)
 }

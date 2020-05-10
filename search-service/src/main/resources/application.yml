@@ -6,6 +6,7 @@ spring:
 server.port: 10002
 
 elasticHost: es
+storageHost: storage
 
 eureka:
   instance:
