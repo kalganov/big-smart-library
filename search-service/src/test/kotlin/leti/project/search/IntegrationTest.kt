@@ -1,7 +1,8 @@
-package leti.project.storage
+package leti.project.search
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import leti.project.storage.feign.SearchClient
+import leti.project.search.feign.StorageClient
+import org.elasticsearch.client.RestHighLevelClient
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -28,5 +29,5 @@ abstract class IntegrationTest {
     @Autowired
     protected lateinit var kafkaTemplate: KafkaTemplate<String, String>
     @MockBean
-    protected lateinit var client: SearchClient
+    protected lateinit var client: StorageClient
 }

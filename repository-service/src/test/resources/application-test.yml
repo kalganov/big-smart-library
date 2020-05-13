@@ -12,3 +12,5 @@ spring:
   kafka:
     bootstrap-servers: ${spring.embedded.kafka.brokers}
     topic: storage.entity
+
+searchHost: localhost

@@ -5,16 +5,36 @@ import leti.project.storage.IntegrationTest
 import leti.project.storage.model.Author
 import leti.project.storage.model.Book
 import org.junit.Test
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class BookControllerTest : IntegrationTest() {
 
     @Test
+    @Order(1)
+    fun testFillBooks() {
+        mockMvc.perform(get("/api/books/fill"))
+            .andDo(print())
+            .andExpect(status().isOk)
+
+        mockMvc.perform(get("/api/books").param("page", "0").param("size", "10"))
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect { result ->
+                result.response.contentAsString.contains("A Game of Thrones")
+            }
+    }
+
+    @Test
     @Throws(Exception::class)
+    @Order(2)
     fun testRead() {
         mockMvc.perform(get("/api/books").param("page", "0").param("size", "10"))
             .andDo(print())
@@ -22,20 +42,7 @@ class BookControllerTest : IntegrationTest() {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun testSave() {
-        val book = createBook()
-        mockMvc.perform(
-            post("/api/books/save")
-                .content(asJsonString(book))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-        )
-            .andDo(print())
-            .andExpect(status().isOk)
-    }
-
-    @Test
+    @Order(4)
     fun testSaveAndDelete() {
         var book = createBook()
         mockMvc.perform(
@@ -56,6 +63,7 @@ class BookControllerTest : IntegrationTest() {
     }
 
     @Test
+    @Order(5)
     fun testSaveAndUpdate() {
         var book = createBook()
         mockMvc.perform(
@@ -83,6 +91,7 @@ class BookControllerTest : IntegrationTest() {
     }
 
     @Test
+    @Order(6)
     fun testSaveAndFindOne() {
         var book = createBook()
         mockMvc.perform(

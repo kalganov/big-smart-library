@@ -1,27 +1,17 @@
 package leti.project.storage.feign
 
-import feign.Feign
-import feign.Logger
-import feign.Logger.ErrorLogger
-import feign.jackson.JacksonDecoder
-import feign.jackson.JacksonEncoder
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.cloud.openfeign.support.SpringMvcContract
-import org.springframework.context.annotation.Bean
+import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 
 
 @Configuration
+@Profile("!test")
+@EnableFeignClients(basePackageClasses = [SearchClient::class])
 class FeignConfig {
 
-    @Bean
-    fun searchClient(@Value("\${searchHost}") host: String): SearchClient {
-        return Feign.builder()
-            .contract(SpringMvcContract())
-            .encoder(JacksonEncoder())
-            .decoder(JacksonDecoder())
-            .logger(ErrorLogger())
-            .logLevel(Logger.Level.FULL)
-            .target(SearchClient::class.java, "http://$host:10002")
+    companion object {
+        const val SERVICE_URL = "http://\${searchHost}:10002"
+        const val SERVICE_FEIGN_NAME = "search-service"
     }
 }

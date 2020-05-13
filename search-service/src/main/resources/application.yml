@@ -3,6 +3,13 @@ spring:
   jmx.enabled: false
   kafka:
     bootstrap-servers: kafka:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties.spring.json.trusted.packages: "*"
+      group-id: search-one-by-one-consumer
+      auto-offset-reset: latest
+    topic: storage.entity
 server.port: 10002
 
 elasticHost: es
